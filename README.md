@@ -10,24 +10,14 @@ GitHub Pages is served from `index.html` at the root of `main` (not this README)
 
 ## Cloudflare Pages
 
-If the site still shows **Hello World**, the Pages project is still the starter template — it is not building this repo yet.
+Hello World means the Cloudflare project is still the starter template.
 
-In Cloudflare → Workers & Pages → `aether001` → Settings → Builds:
+Create (or reconnect) a **Pages** app from Git — `DanielQueirogaFerreira/aether001`, branch `main`.
 
-| Setting | Value |
-| --- | --- |
-| Connect to Git | `DanielQueirogaFerreira/aether001` |
-| Production branch | `main` |
-| Framework | None |
-| Build command | `npm run build:cf` |
-| Build output | `dist` |
-| Node | `22` |
-
-Save, then **Retry deployment**. Aether will not replace Hello World until Cloudflare builds this repository.
-
-## Local
+The only dashboard field you need is:
 
 ```
-npm install
-npm run dev
+npm run build:cf
 ```
+
+Output (`dist`) and Node `22` are already in `wrangler.toml` and `.nvmrc`. Then **Retry deployment**.
