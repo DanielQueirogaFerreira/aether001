@@ -6,9 +6,7 @@ Paint with light. A full-screen particle studio.
 
 Live: [danielqueirogaferreira.github.io/aether001](https://danielqueirogaferreira.github.io/aether001/)
 
-## GitHub Pages
-
-The studio is published from the `gh-pages` branch (built `index.html` + assets). A push to `main` rebuilds and updates that branch.
+GitHub Pages is served from `index.html` at the root of `main` (not this README).
 
 ## Cloudflare Pages
 
@@ -25,7 +23,7 @@ In Cloudflare → Workers & Pages → `aether001` → Settings → Builds:
 | Build output | `dist` |
 | Node | `22` |
 
-Save, then **Retry deployment**. Cloudflare needs the worker (`_worker.js`) from `npm run build:cf` — a Hello World upload will not become Aether on its own.
+Save, then **Retry deployment**. Aether will not replace Hello World until Cloudflare builds this repository.
 
 ## Local
 

@@ -1,8 +1,6 @@
 name: GitHub Pages
 
 on:
-  push:
-    branches: [main]
   workflow_dispatch:
 
 permissions:
@@ -21,18 +19,24 @@ jobs:
         with:
           node-version: "22"
           cache: npm
-      - run: npm ci
+      - run: npm install
       - run: npm run build:pages
-      - name: Publish gh-pages
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Publish site files on main
         run: |
           set -eu
-          cd dist
-          git init
-          git checkout -b gh-pages
+          cp -f dist/index.html index.html
+          cp -f dist/404.html 404.html
+          cp -f dist/.nojekyll .nojekyll
+          rm -rf assets __grok
+          cp -a dist/assets assets
+          cp -a dist/__grok __grok
+          cp -f dist/favicon.svg favicon.svg
+          cp -f dist/ethereal.mp3 ethereal.mp3
+          cp -f dist/og.jpg og.jpg
+          cp -f dist/x-banner.jpg x-banner.jpg
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add -A
-          git commit -m "Aether GitHub Pages"
-          git push -f "https://x-access-token:${GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}.git" gh-pages
+          git add index.html 404.html .nojekyll assets __grok favicon.svg ethereal.mp3 og.jpg x-banner.jpg
+          git diff --cached --quiet && echo "no site changes" && exit 0
+          git commit -m "Publish Aether site files"
+          git push
