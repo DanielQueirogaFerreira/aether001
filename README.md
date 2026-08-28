@@ -8,16 +8,12 @@ Live: [danielqueirogaferreira.github.io/aether001](https://danielqueirogaferreir
 
 GitHub Pages is served from `index.html` at the root of `main` (not this README).
 
-## Cloudflare Pages
+## Cloudflare
 
-Hello World means the Cloudflare project is still the starter template.
-
-Create (or reconnect) a **Pages** app from Git — `DanielQueirogaFerreira/aether001`, branch `main`.
-
-The only dashboard field you need is:
+The `aether001` service is a **Worker**. Build command in the dashboard:
 
 ```
 npm run build:cf
 ```
 
-Output (`dist`) and Node `22` are already in `wrangler.toml` and `.nvmrc`. Then **Retry deployment**.
+Wrangler serves `dist` as a single-page app. Node 22 is in `.nvmrc`.

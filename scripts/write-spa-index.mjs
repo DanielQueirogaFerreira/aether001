@@ -37,6 +37,27 @@ function findShell(root) {
   return null;
 }
 
+function rewriteAssetUrls(html, destDir, pathPrefix) {
+  const assetsDir = join(destDir, "assets");
+  if (!existsSync(assetsDir)) return html;
+  const files = readdirSync(assetsDir);
+  const css = files.find((f) => f.startsWith("styles-") && f.endsWith(".css"));
+  const js = files.find((f) => f.startsWith("index-") && f.endsWith(".js"));
+  const routes = files.find((f) => f.startsWith("routes-") && f.endsWith(".js"));
+  const base = pathPrefix || "";
+  let out = html;
+  if (css) {
+    out = out.replace(/\/(?:[\w-]+\/)?assets\/styles-[^"' \]]+\.css/g, `${base}/assets/${css}`);
+  }
+  if (js) {
+    out = out.replace(/\/(?:[\w-]+\/)?assets\/index-[^"' \]]+\.js/g, `${base}/assets/${js}`);
+  }
+  if (routes) {
+    out = out.replace(/\/(?:[\w-]+\/)?assets\/routes-[^"' \]]+\.js/g, `${base}/assets/${routes}`);
+  }
+  return out;
+}
+
 const shellPath = findShell(src);
 if (!shellPath) {
   console.error("no prerendered shell HTML found under", src);
@@ -45,7 +66,17 @@ if (!shellPath) {
 
 let html = readFileSync(shellPath);
 html = Buffer.from(html.toString("utf8").replace(/\u0000/g, ""));
-const text = html.toString("utf8");
+
+if (src !== dest) {
+  rmSync(dest, { recursive: true, force: true });
+  mkdirSync(dest, { recursive: true });
+  for (const name of readdirSync(src)) {
+    if (name === ".html") continue;
+    cpSync(join(src, name), join(dest, name), { recursive: true });
+  }
+}
+
+let text = rewriteAssetUrls(html.toString("utf8"), dest, prefix);
 const looksLikeStart =
   text.includes("$_TSR") &&
   text.includes("type=\"module\"") &&
@@ -57,24 +88,15 @@ if (!looksLikeStart) {
   process.exit(1);
 }
 
-if (src !== dest) {
-  rmSync(dest, { recursive: true, force: true });
-  mkdirSync(dest, { recursive: true });
-  for (const name of readdirSync(src)) {
-    if (name === ".html") continue;
-    cpSync(join(src, name), join(dest, name), { recursive: true });
-  }
-}
-
-writeFileSync(join(dest, "index.html"), html);
-writeFileSync(join(dest, "404.html"), html);
+writeFileSync(join(dest, "index.html"), text);
+writeFileSync(join(dest, "404.html"), text);
 writeFileSync(join(dest, ".nojekyll"), "");
 
 const stray = join(dest, ".html");
 if (existsSync(stray)) rmSync(stray);
 
 console.log(
-  `froze ${shellPath} → ${join(dest, "index.html")} (${html.length} bytes)`,
+  `froze ${shellPath} → ${join(dest, "index.html")} (${text.length} bytes)`,
 );
 if (existsSync(join(dest, "assets"))) {
   console.log("assets", readdirSync(join(dest, "assets")).join(", "));

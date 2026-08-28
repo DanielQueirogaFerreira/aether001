@@ -13,8 +13,8 @@
   "scripts": {
     "dev": "node scripts/with-app-env.mjs vite dev --host 0.0.0.0 --port 8080",
     "build": "node scripts/with-app-env.mjs vite build && npm run db:migrate",
-    "build:cf": "NITRO_PRESET=cloudflare-pages node scripts/with-app-env.mjs vite build",
-    "build:pages": "SPA_MODE=1 VITE_BASE=/aether001/ node scripts/with-app-env.mjs vite build && node scripts/write-spa-index.mjs dist /aether001",
+    "build:cf": "SPA_MODE=1 node scripts/with-hidden-root-html.mjs node scripts/with-app-env.mjs vite build && node scripts/write-spa-index.mjs dist /",
+    "build:pages": "SPA_MODE=1 VITE_BASE=/aether001/ node scripts/with-hidden-root-html.mjs node scripts/with-app-env.mjs vite build && node scripts/write-spa-index.mjs dist /aether001",
     "db:migrate": "node scripts/migrate.mjs",
     "build:dev": "node scripts/with-app-env.mjs vite build --mode development",
     "preview": "node scripts/with-app-env.mjs vite preview",

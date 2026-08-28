@@ -1,11 +1,10 @@
-# Cloudflare Pages — Git build
-# Dashboard only needs the build command: npm run build:cf
-# Output directory (dist) and Node 22 live in this repo so the other
-# dashboard fields are optional.
+# Cloudflare Workers Builds (the aether001 service is a Worker, not Pages).
+# Dashboard build command: npm run build:cf
+# Output directory is dist — do not use pages_build_output_dir here.
 name = "aether001"
 compatibility_date = "2026-08-21"
-compatibility_flags = ["nodejs_compat"]
-pages_build_output_dir = "dist"
+workers_dev = true
 
-[build]
-command = "npm run build:cf"
+[assets]
+directory = "./dist"
+not_found_handling = "single-page-application"
