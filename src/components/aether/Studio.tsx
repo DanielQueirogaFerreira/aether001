@@ -756,7 +756,7 @@ export function Studio() {
         }}
       />
 
-      <VersionBadge />
+      <VersionBadge visible={!entered || chromeVisible} />
     </div>
   );
 }

@@ -76,13 +76,16 @@
 .version-badge {
   right: max(0.75rem, env(safe-area-inset-right));
   bottom: max(0.65rem, env(safe-area-inset-bottom));
-  padding: 0.28rem 0.55rem;
-  border-radius: 4px;
+  padding: 0.12rem 0.28rem;
+  border-radius: 3px;
   border: 1px solid color-mix(in srgb, var(--color-solar) 32%, transparent);
   background: color-mix(in srgb, var(--color-void) 84%, transparent);
-  box-shadow: 0 0 18px color-mix(in srgb, var(--color-void) 80%, transparent);
+  box-shadow: 0 0 12px color-mix(in srgb, var(--color-void) 80%, transparent);
   backdrop-filter: blur(8px);
   -webkit-backdrop-filter: blur(8px);
+  font-size: 0.5rem;
+  line-height: 1.2;
+  letter-spacing: 0.16em;
 }
 
 input[type="range"].aether-range {

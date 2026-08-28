@@ -2,7 +2,7 @@
 
 Paint with light. A full-screen particle studio.
 
-**Version:** 1.0.0
+**Version:** 1.0.1
 
 ## Cloudflare Pages
 
