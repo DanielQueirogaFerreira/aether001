@@ -147,7 +147,7 @@ export class SoundManager {
   }
 
   private async playAether() {
-    await this.playUrl("/ethereal.mp3");
+    await this.playUrl(`${import.meta.env.BASE_URL}ethereal.mp3`);
   }
 
   private async playUrl(url: string) {

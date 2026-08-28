@@ -1,6 +1,6 @@
 {
   "name": "aether",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "private": true,
   "sideEffects": false,
   "type": "module",
@@ -14,6 +14,7 @@
     "dev": "node scripts/with-app-env.mjs vite dev --host 0.0.0.0 --port 8080",
     "build": "node scripts/with-app-env.mjs vite build && npm run db:migrate",
     "build:cf": "NITRO_PRESET=cloudflare-pages node scripts/with-app-env.mjs vite build",
+    "build:pages": "SPA_MODE=1 VITE_BASE=/aether001/ node scripts/with-app-env.mjs vite build && node scripts/write-spa-index.mjs dist /aether001",
     "db:migrate": "node scripts/migrate.mjs",
     "build:dev": "node scripts/with-app-env.mjs vite build --mode development",
     "preview": "node scripts/with-app-env.mjs vite preview",
